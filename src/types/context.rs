@@ -642,20 +642,20 @@ mod watcher_tests {
         });
     }
 
-    #[cfg(wip_feature_std)]
+    #[cfg(all(wip_feature_std, not(target_arch = "wasm32")))]
     fn panic_callback(_py: Python<'_>, _event: ContextEvent<'_, '_>) -> PyResult<()> {
         panic!("context watcher panic")
     }
 
-    #[cfg(wip_feature_std)]
+    #[cfg(all(wip_feature_std, not(target_arch = "wasm32")))]
     struct PanickingCallback;
 
-    #[cfg(wip_feature_std)]
+    #[cfg(all(wip_feature_std, not(target_arch = "wasm32")))]
     impl ContextWatcherCallbackDef for PanickingCallback {
         const CALLBACK: ContextWatcherCallback = panic_callback;
     }
 
-    #[cfg(wip_feature_std)]
+    #[cfg(all(wip_feature_std, not(target_arch = "wasm32")))]
     #[test]
     fn callback_panic_does_not_cross_ffi_boundary() {
         Python::attach(|py| {
